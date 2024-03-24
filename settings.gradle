@@ -1,0 +1,5 @@
+rootProject.name = 'LocadoraCRUD'
+
+include ':app'
+include ':lib'
+

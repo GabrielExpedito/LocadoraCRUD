@@ -7,8 +7,11 @@ dependencies {
     implementation project(':lib')
 }
 
+<<<<<<< HEAD
 application {
     mainClass = 'LocadoraCRUD.app.Main'
 }
 
+=======
+>>>>>>> ab1fb8a6329c5390ea96f1529ead169977979279
 description = 'app'

@@ -6,7 +6,11 @@ package LocadoraCRUD.app.GUI.Cadastro;
 
 import LocadoraCRUD.lib.dao.FabricanteDAO;
 import LocadoraCRUD.lib.entity.Fabricante;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -16,7 +20,7 @@ import javax.swing.table.TableModel;
  */
 public class CadastroFabricante extends javax.swing.JDialog {
     FabricanteDAO dao = new FabricanteDAO();
-    
+    private Fabricante fabricanteEditar = null;
     
     /**
      * Creates new form CadastroFabricante
@@ -86,6 +90,11 @@ public class CadastroFabricante extends javax.swing.JDialog {
         });
 
         btnExcluir.setText("Excluir");
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
 
         btnFechar.setText("Fechar");
         btnFechar.addActionListener(new java.awt.event.ActionListener() {
@@ -148,12 +157,45 @@ public class CadastroFabricante extends javax.swing.JDialog {
     }//GEN-LAST:event_btnAdicionarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        int id = (Integer) tblFabricantes.getModel().getValueAt(tblFabricantes.getSelectedRow(), 0);
+        String nome = (String) tblFabricantes.getModel().getValueAt(tblFabricantes.getSelectedRow(), 1);
         
+        try {
+            CadastroFabricanteEditarGUI dialog = new CadastroFabricanteEditarGUI(null, true);
+            dialog.carregarFabricante(id, nome);
+            dialog.setVisible(true);
+        }catch (Exception ex) {
+            Logger.getLogger(CadastroFabricante.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnFecharActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        int id = (Integer) tblFabricantes.getModel().getValueAt(tblFabricantes.getSelectedRow(), 0);
+        String nome = (String) tblFabricantes.getModel().getValueAt(tblFabricantes.getSelectedRow(), 1);
+        
+        int reposta = JOptionPane.showConfirmDialog(this, "Deseja excluir o fabricante selecionado?", "Confirmar exclusão", JOptionPane.YES_NO_OPTION);
+        
+        switch(reposta) {
+            case JOptionPane.YES_NO_OPTION: {
+                try {
+                    dao.delete(id);
+                    
+                    carregarLista();
+                    
+                    JOptionPane.showMessageDialog(this, "Fabricante excluído com sucesso!");
+                } catch (Exception e) {
+                    Logger.getLogger(CadastroFabricante.class.getName()).log(Level.SEVERE, null, e);
+                    JOptionPane.showMessageDialog(null, e.getMessage());
+                }
+            }
+            break;
+        }       
+    }//GEN-LAST:event_btnExcluirActionPerformed
 
     /**
      * @param args the command line arguments

@@ -2,26 +2,29 @@ package LocadoraCRUD.lib.dao;
 
 import LocadoraCRUD.lib.ConexaoBanco;
 import LocadoraCRUD.lib.entity.Fabricante;
+import LocadoraCRUD.lib.entity.Modelo;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FabricanteDAO implements BasicCrudDAO<Fabricante> {
+public class ModeloDAO implements BasicCrudDAO<Modelo> {
 
-    public Fabricante select(Integer id) {
+    @Override
+    public Modelo select(Integer id) {
         String query = String.format("""
-                       SELECT * FROM fabricante WHERE id = %d;
+                       SELECT * FROM modelo WHERE id = %d;
                        
                        """, id);
 
         try (Statement stmt = ConexaoBanco.getConn().createStatement(); ResultSet rs = stmt.executeQuery(query)) {
             if (rs.next()) {
-                Fabricante fabricante = new Fabricante();
-                fabricante.setId(rs.getInt("id"));
-                fabricante.setNome(rs.getString("nome"));
+                Modelo modelo = new Modelo();
+                modelo.setId(rs.getInt("id"));
+                modelo.setNome(rs.getString("nome"));
+                modelo.setIdfabricante(rs.getInt("idfabricante"));
 
-                return fabricante;
+                return modelo;
             }
 
         } catch (Exception e) {
@@ -31,34 +34,36 @@ public class FabricanteDAO implements BasicCrudDAO<Fabricante> {
         return null;
     }
 
-    public List<Fabricante> select() {
-        List<Fabricante> listaFabricante = new ArrayList<>();
+    @Override
+    public List<Modelo> select() {
+        List<Modelo> listaEntidade = new ArrayList<>();
         String query = """
-                       SELECT * FROM fabricante;
+                       SELECT * FROM modelo;
                        
                        """;
 
         try (Statement stmt = ConexaoBanco.getConn().createStatement(); ResultSet rs = stmt.executeQuery(query)) {
             while (rs.next()) {
-                Fabricante fabricante = new Fabricante();
-                fabricante.setId(rs.getInt("id"));
-                fabricante.setNome(rs.getString("nome"));
+                Modelo modelo = new Modelo();
+                modelo.setId(rs.getInt("id"));
+                modelo.setNome(rs.getString("nome"));
+                modelo.setIdfabricante(rs.getInt("idfabricante"));
 
-                listaFabricante.add(fabricante);
+                listaEntidade.add(modelo);
             }
 
         } catch (Exception e) {
             throw new RuntimeException(e);
 
         }
-        return listaFabricante;
+        return listaEntidade;
     }
 
     @Override
-    public int insert(Fabricante entidade) {
+    public int insert(Modelo modelo) {
         String query = String.format("""
-                       INSERT INTO fabricante (id, nome) VALUES(%d, '%s') 
-                       """, entidade.getId(), entidade.getId());
+                       INSERT INTO modelo (id, nome, idfabricante) VALUES(%d, '%s', %d) 
+                       """, modelo.getId(), modelo.getNome(), modelo.getIdfabricante());
 
         try (Statement stmt = ConexaoBanco.getConn().createStatement();) {
             return stmt.executeUpdate(query);
@@ -67,26 +72,27 @@ public class FabricanteDAO implements BasicCrudDAO<Fabricante> {
         }
     }
 
-    public int update(Fabricante fabricante) {
+    @Override
+    public int update(Modelo modelo) {
         String query = String.format("""
-                                     UPDATE fabricante 
+                                     UPDATE modelo 
                                      SET 
                                         nome = '%s'
                                      WHERE 
-                                        id= %d;  
-                                    """, fabricante.getNome(), fabricante.getId());
+                                        id= %d;
+                                        idfabricante = %d
+                                    """, modelo.getNome(), modelo.getId(), modelo.getIdfabricante());
 
         try (Statement stmt = ConexaoBanco.getConn().createStatement();) {
             return stmt.executeUpdate(query);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
     }
 
     public int delete(int id) {
         String query = String.format("""
-                                     DELETE FROM fabricante 
+                                     DELETE FROM modelo 
                                      WHERE 
                                         id= %d;  
                                     """, id);
@@ -96,6 +102,6 @@ public class FabricanteDAO implements BasicCrudDAO<Fabricante> {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
     }
+
 }

@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
  *
  * @author Gabriel Expedito
  */
-public class CadastroFabricanteEditarGUI extends javax.swing.JDialog {
+public class CadastroModeloEditarGUI1 extends javax.swing.JDialog {
 
     private FabricanteDAO dao = new FabricanteDAO();
     private Fabricante fabricanteEditar = null;
@@ -20,7 +20,7 @@ public class CadastroFabricanteEditarGUI extends javax.swing.JDialog {
     /**
      * Creates new form CadastroFabricanteEditarGUI
      */
-    public CadastroFabricanteEditarGUI(java.awt.Frame parent, boolean modal) {
+    public CadastroModeloEditarGUI1(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
@@ -166,20 +166,21 @@ public class CadastroFabricanteEditarGUI extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CadastroFabricanteEditarGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadastroModeloEditarGUI1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CadastroFabricanteEditarGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadastroModeloEditarGUI1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CadastroFabricanteEditarGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadastroModeloEditarGUI1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CadastroFabricanteEditarGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadastroModeloEditarGUI1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                CadastroFabricanteEditarGUI dialog = new CadastroFabricanteEditarGUI(new javax.swing.JFrame(), true);
+                CadastroModeloEditarGUI1 dialog = new CadastroModeloEditarGUI1(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

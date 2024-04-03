@@ -21,14 +21,14 @@ import javax.swing.table.TableModel;
  *
  * @author Gabriel Expedito
  */
-public class CadastroModeloGUI extends javax.swing.JDialog {
+public class CadastroCarroGUI extends javax.swing.JDialog {
     private ModeloDAO dao = new ModeloDAO();
     private CadastroModeloEditarGUI1 editarDialog;
     
     /**
      * Creates new form CadastroFabricante
      */
-    public CadastroModeloGUI(java.awt.Frame parent, boolean modal) {
+    public CadastroCarroGUI(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
        
@@ -179,21 +179,23 @@ public class CadastroModeloGUI extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CadastroModeloGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadastroCarroGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CadastroModeloGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadastroCarroGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CadastroModeloGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadastroCarroGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CadastroModeloGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadastroCarroGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                CadastroModeloGUI dialog = new CadastroModeloGUI(new javax.swing.JFrame(), true);
+                CadastroCarroGUI dialog = new CadastroCarroGUI(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

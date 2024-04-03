@@ -5,7 +5,10 @@
 package LocadoraCRUD.app.GUI.Cadastro;
 
 import LocadoraCRUD.lib.dao.FabricanteDAO;
+import LocadoraCRUD.lib.dao.ModeloDAO;
 import LocadoraCRUD.lib.entity.Fabricante;
+import LocadoraCRUD.lib.entity.Modelo;
+import javax.management.modelmbean.ModelMBean;
 import javax.swing.JOptionPane;
 
 /**
@@ -14,8 +17,8 @@ import javax.swing.JOptionPane;
  */
 public class CadastroModeloEditarGUI1 extends javax.swing.JDialog {
 
-    private FabricanteDAO dao = new FabricanteDAO();
-    private Fabricante fabricanteEditar = null;
+    private ModeloDAO dao = new ModeloDAO();
+    private Modelo modeloEditar = null;
 
     /**
      * Creates new form CadastroFabricanteEditarGUI
@@ -26,10 +29,10 @@ public class CadastroModeloEditarGUI1 extends javax.swing.JDialog {
     }
 
     public void carregarFabricante(Integer id, String nome) {
-        fabricanteEditar = dao.select(id);
+        modeloEditar = dao.select(id);
         txtNome.setText(nome);
 
-        txtNome.setText(fabricanteEditar.getNome());
+        txtNome.setText(modeloEditar.getNome());
 
     }
 
@@ -119,26 +122,26 @@ public class CadastroModeloEditarGUI1 extends javax.swing.JDialog {
     }//GEN-LAST:event_btnFecharActionPerformed
 
     private void btnSalvar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvar1ActionPerformed
-        if (fabricanteEditar == null) {
-            Fabricante novoFabricante = new Fabricante();
-            novoFabricante.setId(Integer.parseInt(txtID.getText().toString()));
-            novoFabricante.setNome(txtNome.getText());
+        if (modeloEditar == null) {
+            Modelo novoModelo = new Modelo();
+            novoModelo.setId(Integer.parseInt(txtID.getText().toString()));
+            novoModelo.setNome(txtNome.getText());
             try {
-                dao.insert(novoFabricante);
-                JOptionPane.showMessageDialog(this, "Fabricante inserido com sucesso");
+                dao.insert(novoModelo);
+                JOptionPane.showMessageDialog(this, "Modelo inserido com sucesso");
                 
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
             }
 
         } else {
-            fabricanteEditar.setId(Integer.parseInt(txtID.getText().toString()));
-            fabricanteEditar.setNome(txtNome.getText());
+            modeloEditar.setId(Integer.parseInt(txtID.getText().toString()));
+            modeloEditar.setNome(txtNome.getText());
             
             try {
-                dao.update(fabricanteEditar);
+                dao.update(modeloEditar);
                 
-                JOptionPane.showMessageDialog(this, "Fabricante inserido com sucesso");
+                JOptionPane.showMessageDialog(this, "Modelo inserido com sucesso");
                 
                 limparCampos();
             } catch (Exception e) {

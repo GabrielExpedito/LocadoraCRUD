@@ -50,9 +50,6 @@ public class BasicCrudPanel<ENTIDADE, DAO extends BasicCrudDAO<ENTIDADE>> extend
         plnTabela = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblConsulta = new javax.swing.JTable();
-        btnExcluir = new javax.swing.JButton();
-        btnEditar = new javax.swing.JButton();
-        btnAdicionar = new javax.swing.JButton();
 
         plnTabela.setBorder(javax.swing.BorderFactory.createTitledBorder("Entity"));
 
@@ -69,53 +66,20 @@ public class BasicCrudPanel<ENTIDADE, DAO extends BasicCrudDAO<ENTIDADE>> extend
         ));
         jScrollPane1.setViewportView(tblConsulta);
 
-        btnExcluir.setText("Excluir");
-        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnExcluirActionPerformed(evt);
-            }
-        });
-
-        btnEditar.setText("Editar");
-        btnEditar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditarActionPerformed(evt);
-            }
-        });
-
-        btnAdicionar.setText("Adicionar");
-        btnAdicionar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAdicionarActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout plnTabelaLayout = new javax.swing.GroupLayout(plnTabela);
         plnTabela.setLayout(plnTabelaLayout);
         plnTabelaLayout.setHorizontalGroup(
             plnTabelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(plnTabelaLayout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addGroup(plnTabelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(plnTabelaLayout.createSequentialGroup()
-                        .addComponent(btnAdicionar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnEditar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnExcluir))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 468, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 468, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(59, Short.MAX_VALUE))
         );
         plnTabelaLayout.setVerticalGroup(
             plnTabelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(plnTabelaLayout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(plnTabelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAdicionar)
-                    .addComponent(btnEditar)
-                    .addComponent(btnExcluir))
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -135,48 +99,8 @@ public class BasicCrudPanel<ENTIDADE, DAO extends BasicCrudDAO<ENTIDADE>> extend
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        int id = (Integer) tblConsulta.getModel().getValueAt(tblConsulta.getSelectedRow(), 0);
-        String nome = (String) tblConsulta.getModel().getValueAt(tblConsulta.getSelectedRow(), 1);
-
-        int reposta = JOptionPane.showConfirmDialog(this, "Deseja excluir o fabricante selecionado?", "Confirmar exclusão", JOptionPane.YES_NO_OPTION);
-
-        switch(reposta) {
-            case JOptionPane.YES_NO_OPTION: {
-                try {
-                    dao.delete(id);
-
-                    JOptionPane.showMessageDialog(this, "Excluído com Sucesso!");
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null, e.getMessage());
-                }
-            }
-            break;
-        }
-    }//GEN-LAST:event_btnExcluirActionPerformed
-
-    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        int id = (Integer) tblConsulta.getModel().getValueAt(tblConsulta.getSelectedRow(), 0);
-        String nome = (String) tblConsulta.getModel().getValueAt(tblConsulta.getSelectedRow(), 1);
-
-        try {
-            CadastroFabricanteEditarGUI dialog = new CadastroFabricanteEditarGUI(null, true);
-            dialog.carregarFabricante(id, nome);
-            dialog.setVisible(true);
-        }catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage());
-        }
-    }//GEN-LAST:event_btnEditarActionPerformed
-
-    private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
-        cadastroEditarDialog.setVisible(true);
-    }//GEN-LAST:event_btnAdicionarActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAdicionar;
-    private javax.swing.JButton btnEditar;
-    private javax.swing.JButton btnExcluir;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel plnTabela;
     private javax.swing.JTable tblConsulta;

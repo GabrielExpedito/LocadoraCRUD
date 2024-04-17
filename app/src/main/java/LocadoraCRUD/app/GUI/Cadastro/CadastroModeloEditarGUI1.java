@@ -8,6 +8,8 @@ import LocadoraCRUD.lib.dao.FabricanteDAO;
 import LocadoraCRUD.lib.dao.ModeloDAO;
 import LocadoraCRUD.lib.entity.Fabricante;
 import LocadoraCRUD.lib.entity.Modelo;
+import java.util.ArrayList;
+import java.util.List;
 import javax.management.modelmbean.ModelMBean;
 import javax.swing.JOptionPane;
 
@@ -19,6 +21,9 @@ public class CadastroModeloEditarGUI1 extends javax.swing.JDialog {
 
     private ModeloDAO dao = new ModeloDAO();
     private Modelo modeloEditar = null;
+    private FabricanteDAO fdao = new FabricanteDAO();
+    private Fabricante fabricante = new Fabricante();
+    private List<Fabricante> listaFabricante = new ArrayList<>();
 
     /**
      * Creates new form CadastroFabricanteEditarGUI
@@ -26,6 +31,8 @@ public class CadastroModeloEditarGUI1 extends javax.swing.JDialog {
     public CadastroModeloEditarGUI1(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        
+        carregarComboBoxFabricant();
     }
 
     public void carregarFabricante(Integer id, String nome) {
@@ -34,6 +41,22 @@ public class CadastroModeloEditarGUI1 extends javax.swing.JDialog {
 
         txtNome.setText(modeloEditar.getNome());
 
+    }
+    
+    public void carregarComboBoxFabricant() {
+        listaFabricante = fdao.select();
+        
+        Object[] valoresModel = new Object[listaFabricante.size()];
+        
+        int i = 0;
+        
+        for (Fabricante fabricante : listaFabricante) {
+            valoresModel[i] = fabricante.getNome();
+            
+            i++;
+            
+        }
+        
     }
 
     private void limparCampos() {
@@ -79,7 +102,7 @@ public class CadastroModeloEditarGUI1 extends javax.swing.JDialog {
             }
         });
 
-        cbIDFabricante.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbIDFabricante.setModel(carregarComboBoxFabricant());
 
         jLabel1.setText("ID Fabricante");
 

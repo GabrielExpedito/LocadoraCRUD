@@ -28,8 +28,7 @@ public class CadastroFabricanteEditarGUI extends javax.swing.JDialog {
     public void carregarFabricante(Integer id, String nome) {
         fabricanteEditar = dao.select(id);
         txtNome.setText(nome);
-
-        txtNome.setText(fabricanteEditar.getNome());
+        txtID.setText(Integer.toString(id));
 
     }
 
@@ -112,6 +111,7 @@ public class CadastroFabricanteEditarGUI extends javax.swing.JDialog {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharActionPerformed
@@ -126,7 +126,7 @@ public class CadastroFabricanteEditarGUI extends javax.swing.JDialog {
             try {
                 dao.insert(novoFabricante);
                 JOptionPane.showMessageDialog(this, "Fabricante inserido com sucesso");
-                
+
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
             }
@@ -134,19 +134,19 @@ public class CadastroFabricanteEditarGUI extends javax.swing.JDialog {
         } else {
             fabricanteEditar.setId(Integer.parseInt(txtID.getText().toString()));
             fabricanteEditar.setNome(txtNome.getText());
-            
+
             try {
                 dao.update(fabricanteEditar);
-                
+
                 JOptionPane.showMessageDialog(this, "Fabricante inserido com sucesso");
-                
+
                 limparCampos();
+
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
             }
-            
-            
         }
+            this.dispose();
     }//GEN-LAST:event_btnSalvar1ActionPerformed
 
     /**

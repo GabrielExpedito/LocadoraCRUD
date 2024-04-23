@@ -46,16 +46,13 @@ public class CadastroModeloEditarGUI1 extends javax.swing.JDialog {
     public void carregarComboBoxFabricant() {
         listaFabricante = fdao.select();
         
-        Object[] valoresModel = new Object[listaFabricante.size()];
+        cbIDFabricante.removeAll();
         
-        int i = 0;
-        
-        for (Fabricante fabricante : listaFabricante) {
-            valoresModel[i] = fabricante.getNome();
-            
-            i++;
+        for (Fabricante f : listaFabricante) {
+            cbIDFabricante.addItem(f.getNome());
             
         }
+        
         
     }
 
@@ -101,8 +98,6 @@ public class CadastroModeloEditarGUI1 extends javax.swing.JDialog {
                 btnSalvar1ActionPerformed(evt);
             }
         });
-
-        cbIDFabricante.setModel(carregarComboBoxFabricant());
 
         jLabel1.setText("ID Fabricante");
 
@@ -153,6 +148,7 @@ public class CadastroModeloEditarGUI1 extends javax.swing.JDialog {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharActionPerformed
@@ -236,7 +232,7 @@ public class CadastroModeloEditarGUI1 extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnFechar;
     private javax.swing.JButton btnSalvar1;
-    private javax.swing.JComboBox<String> cbIDFabricante;
+    private javax.swing.JComboBox<Object> cbIDFabricante;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lblID;
     private javax.swing.JLabel lblNome;

@@ -58,7 +58,7 @@ public class FabricanteDAO implements BasicCrudDAO<Fabricante> {
     public int insert(Fabricante entidade) {
         String query = String.format("""
                        INSERT INTO fabricante (id, nome) VALUES(%d, '%s') 
-                       """, entidade.getId(), entidade.getId());
+                       """, entidade.getId(), entidade.getNome());
 
         try (Statement stmt = ConexaoBanco.getConn().createStatement();) {
             return stmt.executeUpdate(query);

@@ -148,12 +148,13 @@ public class CadastroFabricante extends javax.swing.JDialog {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
         CadastroFabricanteEditarGUI dialog = new CadastroFabricanteEditarGUI(null, true);
         dialog.setVisible(true);
-
+        carregarLista();
     }//GEN-LAST:event_btnAdicionarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
@@ -168,6 +169,7 @@ public class CadastroFabricante extends javax.swing.JDialog {
             Logger.getLogger(CadastroFabricante.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
+        carregarLista();
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharActionPerformed

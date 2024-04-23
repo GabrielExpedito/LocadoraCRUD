@@ -22,7 +22,8 @@ import javax.swing.table.TableModel;
  * @author Gabriel Expedito
  */
 public class CadastroModeloGUI extends javax.swing.JDialog {
-    private ModeloDAO dao = new ModeloDAO();
+    ModeloDAO dao = new ModeloDAO();
+    private Modelo modeloEditar = null;
     private CadastroModeloEditarGUI1 editarDialog;
     
     /**
@@ -31,13 +32,38 @@ public class CadastroModeloGUI extends javax.swing.JDialog {
     public CadastroModeloGUI(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-       
-        editarDialog = new CadastroModeloEditarGUI1((JFrame) this.getParent(), true);
+        carregarLista();
+       // editarDialog = new CadastroModeloEditarGUI1((JFrame) this.getParent(), true);
         
-        BasicCrudPanel panelConsulta = new BasicCrudPanel(dao, editarDialog);
-        panelConsulta.carregarLista(getDadosLista(), getColunasLista());
+        //BasicCrudPanel panelConsulta = new BasicCrudPanel(dao, editarDialog);
+        //panelConsulta.carregarLista(getDadosLista(), getColunasLista());
         
-        panelConsultaModelo.add(panelConsulta);
+       // panelConsultaModelo.add(panelConsulta);
+    }
+    
+    public void carregarLista() {
+        List<Modelo> listaModelo = dao.select();
+        
+        Object[][] dados = new Object[listaModelo.size()][Modelo.class.getDeclaredFields().length];
+        
+        int i = 0;
+        
+        for (Modelo modelo : listaModelo) {
+            dados[i][0] = modelo.getId();
+            dados[i][1] = modelo.getNome();
+            
+            i++;
+        }
+        
+        TableModel model = new DefaultTableModel(dados, new Object[]{"ID", "NOME"}) {
+           
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        tblModelos.setModel(model);
+        
     }
     
     
@@ -74,10 +100,11 @@ public class CadastroModeloGUI extends javax.swing.JDialog {
     private void initComponents() {
 
         btnFechar = new javax.swing.JButton();
-        panelConsultaModelo = new javax.swing.JPanel();
         btnAdicionar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblModelos = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -87,8 +114,6 @@ public class CadastroModeloGUI extends javax.swing.JDialog {
                 btnFecharActionPerformed(evt);
             }
         });
-
-        panelConsultaModelo.setLayout(new javax.swing.BoxLayout(panelConsultaModelo, javax.swing.BoxLayout.LINE_AXIS));
 
         btnAdicionar.setText("Adicionar");
         btnAdicionar.addActionListener(new java.awt.event.ActionListener() {
@@ -111,29 +136,39 @@ public class CadastroModeloGUI extends javax.swing.JDialog {
             }
         });
 
+        tblModelos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane1.setViewportView(tblModelos);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnAdicionar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnEditar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnExcluir)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 253, Short.MAX_VALUE)
-                        .addComponent(btnFechar))
-                    .addComponent(panelConsultaModelo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(btnAdicionar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnEditar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnExcluir)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 253, Short.MAX_VALUE)
+                .addComponent(btnFechar)
                 .addContainerGap())
+            .addComponent(jScrollPane1)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(panelConsultaModelo, javax.swing.GroupLayout.DEFAULT_SIZE, 401, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 407, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnFechar)
@@ -144,6 +179,7 @@ public class CadastroModeloGUI extends javax.swing.JDialog {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharActionPerformed
@@ -154,12 +190,35 @@ public class CadastroModeloGUI extends javax.swing.JDialog {
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        // TODO add your handling code here:
+        int id = (Integer) tblModelos.getModel().getValueAt(tblModelos.getSelectedRow(), 0);
+        String nome = (String) tblModelos.getModel().getValueAt(tblModelos.getSelectedRow(), 1);
+   
+        int resposta = JOptionPane.showConfirmDialog(this, "Deseja excluirt o fabricante selecioando ?");
+        
+        switch (resposta) {
+            case JOptionPane.YES_NO_OPTION: {
+                try {
+                    dao.delete(id);
+                    carregarLista();
+                    JOptionPane.showMessageDialog(this, "Fabricante excluído com sucesso!");
+                } catch (Exception e) {
+                    Logger.getLogger(CadastroModeloGUI.class.getName()).log(Level.SEVERE, null, e);
+                    JOptionPane.showMessageDialog(null, e.getMessage());
+                    
+                }
+            }
+                
+                break;
+            default:
+                throw new AssertionError();
+        }
+        
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
         CadastroModeloEditarGUI1 dialog = new CadastroModeloEditarGUI1(null, true);
         dialog.setVisible(true);
+        carregarLista();
     }//GEN-LAST:event_btnAdicionarActionPerformed
 
     /**
@@ -210,6 +269,7 @@ public class CadastroModeloGUI extends javax.swing.JDialog {
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnFechar;
-    private javax.swing.JPanel panelConsultaModelo;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tblModelos;
     // End of variables declaration//GEN-END:variables
 }
